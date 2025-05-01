@@ -1,0 +1,74 @@
+Experiment 8:program to implement Monkey Banana Problem using python
+class MonkeyBananaProblem:
+    def __init__(self):
+        self.state = {
+            'monkey': 'floor',   # 'floor' or 'stool'
+            'position': 'A',     # Position can be 'A', 'B', or 'C'
+            'stool': 'B',        # Position of the stool
+            'banana': 'hanging', # 'hanging' or 'grabbed'
+        }
+
+    def move_to(self, position):
+        print(f"Monkey moves to position {position}")
+        self.state['position'] = position
+
+    def push_stool(self, position):
+        print(f"Monkey pushes stool to position {position}")
+        self.state['stool'] = position
+        self.state['position'] = position
+
+    def climb_stool(self):
+        if self.state['position'] == self.state['stool']:
+            print("Monkey climbs the stool")
+            self.state['monkey'] = 'stool'
+        else:
+            print("Monkey must be at the stool's position to climb")
+
+    def grab_banana(self):
+        if self.state['monkey'] == 'stool' and self.state['position'] == 'B' and self.state['banana'] == 'hanging':
+            print("Monkey grabs the banana")
+            self.state['banana'] = 'grabbed'
+        else:
+            print("Monkey cannot grab the banana in the current state")
+
+    def is_goal_state(self):
+        return self.state['banana'] == 'grabbed'
+
+    def solve(self):
+        # Step 1: Move to the stool
+        if self.state['position'] != self.state['stool']:
+            self.move_to(self.state['stool'])
+        
+        # Step 2: Push the stool to position B (under the banana)
+        if self.state['stool'] != 'B':
+            self.push_stool('B')
+        
+        # Step 3: Climb the stool
+        self.climb_stool()
+        
+        # Step 4: Grab the banana
+        self.grab_banana()
+        
+        # Check if goal state is reached
+        if self.is_goal_state():
+            print("Monkey successfully grabbed the banana!")
+        else:
+            print("Monkey failed to grab the banana.")
+
+# Example usage
+problem = MonkeyBananaProblem()
+problem.solve()
+Explanation:
+1.	State Representation: The state dictionary represents the current state of the monkey, stool, and banana.
+2.	Actions: The monkey can perform several actions:
+o	move_to(position): Moves the monkey to a specified position.
+o	push_stool(position): Pushes the stool to a specified position.
+o	climb_stool(): Climbs the stool if the monkey is at the stool's position.
+o	grab_banana(): Grabs the banana if the monkey is on the stool under the banana.
+3.	Goal State: The goal state is when the banana is grabbed (state['banana'] == 'grabbed').
+4.	Solving the Problem: The solve method orchestrates the actions to solve the problem step-by-step.
+Output:
+Monkey moves to position B
+Monkey climbs the stool
+Monkey grabs the banana
+Monkey successfully grabbed the banana!
