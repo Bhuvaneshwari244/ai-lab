@@ -1,0 +1,121 @@
+Experiment 3: Minimax Algorithm for Tic-Tac-Toe game
+How It Works:
+1.	Board Representation: The board is represented as a 3x3 list of lists.
+2.	Player Move: Players input a move (1-9), which corresponds to a position on the board.
+3.	Check for Winner: The game checks rows, columns, and diagonals to determine if there is a winner.
+4.	Check for Full Board: If the board is full without a winner, the game declares a tie.
+5.	Game Loop: The game alternates between players 'X' and 'O' until there is a winner or a tie.
+# Tuple to store winning positions.
+win_positions = (
+    (0, 1, 2), (3, 4, 5), (6, 7, 8),
+    (0, 3, 6), (1, 4, 7), (2, 5, 8),
+    (0, 4, 8), (2, 4, 6)
+)
+ 
+def game(player):
+    # diplay current mesh
+    print("\n", " | ".join(mesh[:3]))
+    print("---+---+---")
+    print("", " | ".join(mesh[3:6]))
+    print("---+---+---")
+    print("", " | ".join(mesh[6:]))
+ 
+    # Loop until player valid input cell number.
+    while True:
+        try:
+            ch = int(input(f"Enter player {player}'s choice : "))
+            if str(ch) not in mesh:
+                raise ValueError
+            mesh[ch-1] = player
+            break
+        except ValueError:
+            print("Invalid position number.")
+ 
+    # Return winning positions if player wins, else None.
+    for wp in win_positions:
+        if all(mesh[pos] == player for pos in wp):
+            return wp
+    return None
+
+player1 = "X"
+player2 = "O"
+player = player1
+mesh = list("123456789")
+ 
+for i in range(9):
+	won = game(player)
+	if won:
+		print("\n", " | ".join(mesh[:3]))
+		print("---+---+---")
+		print("", " | ".join(mesh[3:6]))
+		print("---+---+---")
+		print("", " | ".join(mesh[6:]))
+		print(f"*** Player {player} won! ***")
+		break
+	player = player1 if player == player2 else player2
+else:
+    # 9 moves without a win is a draw.
+    print("Game ends in a draw.")
+Output:
+1 | 2 | 3
+---+---+---
+ 4 | 5 | 6
+---+---+---
+ 7 | 8 | 9
+Enter player X's choice : 2
+
+ 1 | X | 3
+---+---+---
+ 4 | 5 | 6
+---+---+---
+ 7 | 8 | 9
+Enter player O's choice : 1
+
+ O | X | 3
+---+---+---
+ 4 | 5 | 6
+---+---+---
+ 7 | 8 | 9
+Enter player X's choice : 6
+
+ O | X | 3
+---+---+---
+ 4 | 5 | X
+---+---+---
+ 7 | 8 | 9
+Enter player O's choice : 5
+
+ O | X | 3
+---+---+---
+ 4 | O | X
+---+---+---
+ 7 | 8 | 9
+Enter player X's choice : 8
+
+ O | X | 3
+---+---+---
+ 4 | O | X
+---+---+---
+ 7 | X | 9
+Enter player O's choice : 4
+
+ O | X | 3
+---+---+---
+ O | O | X
+---+---+---
+ 7 | X | 9
+Enter player X's choice : 9
+
+ O | X | 3
+---+---+---
+ O | O | X
+---+---+---
+ 7 | X | X
+Enter player O's choice : 7
+
+ O | X | 3
+---+---+---
+ O | O | X
+---+---+---
+ O | X | X
+*** Player O won! ***

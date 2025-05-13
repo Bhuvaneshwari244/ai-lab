@@ -1,0 +1,20 @@
+Experiment 7: program to implement Towers of Hanoi using python 
+def towers_of_hanoi(n, source, target, auxiliary):
+    if n == 1:
+        print(f"Move disk 1 from {source} to {target}")
+        return
+    towers_of_hanoi(n - 1, source, auxiliary, target)
+    print(f"Move disk {n} from {source} to {target}")
+    towers_of_hanoi(n - 1, auxiliary, target, source)
+
+# Example usage
+n = 3  # Number of disks
+towers_of_hanoi(n, 'A', 'C', 'B')
+Output:
+1.	Move disk 1 from A to C
+2.	Move disk 2 from A to B
+3.	Move disk 1 from C to B
+4.	Move disk 3 from A to C
+5.	Move disk 1 from B to A
+6.	Move disk 2 from B to C
+7.	Move disk 1 from A to C
